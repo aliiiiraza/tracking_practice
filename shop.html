@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TrendMart - Online Store (Tracking Practice)</title>
+<style>
+  :root{--p:#4f46e5;--p2:#4338ca;--bg:#f6f7fb;--tx:#1f2937;--mut:#6b7280;--ok:#16a34a;--red:#dc2626}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:system-ui,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--tx)}
+  header{background:#fff;position:sticky;top:0;z-index:50;box-shadow:0 1px 6px rgba(0,0,0,.08)}
+  .bar{max-width:1150px;margin:auto;display:flex;align-items:center;gap:14px;padding:12px 16px;flex-wrap:wrap}
+  .logo{font-weight:800;font-size:22px;color:var(--p)}
+  .search{flex:1;min-width:180px;display:flex}
+  .search input{flex:1;padding:10px 12px;border:1px solid #d1d5db;border-radius:8px 0 0 8px;font-size:14px}
+  .search button{padding:10px 16px;border:0;background:var(--p);color:#fff;border-radius:0 8px 8px 0;cursor:pointer}
+  .cartbtn{position:relative;background:#fff;border:1px solid #d1d5db;border-radius:8px;padding:9px 14px;cursor:pointer;font-size:14px}
+  .cartbtn b{position:absolute;top:-8px;right:-8px;background:var(--red);color:#fff;border-radius:50%;min-width:20px;height:20px;font-size:12px;display:grid;place-items:center}
+  .topstrip{background:var(--p);color:#fff;text-align:center;padding:8px;font-size:13px}
+  .hero{max-width:1150px;margin:18px auto;padding:34px 24px;border-radius:16px;background:linear-gradient(120deg,#4f46e5,#7c3aed);color:#fff}
+  .hero h1{font-size:34px;margin-bottom:8px}
+  .hero p{opacity:.9;margin-bottom:16px}
+  .btn{background:#fff;color:var(--p);border:0;padding:11px 20px;border-radius:8px;font-weight:700;cursor:pointer;font-size:14px}
+  .btn.pri{background:var(--p);color:#fff}.btn.pri:hover{background:var(--p2)}
+  .btn.full{width:100%;margin-top:10px}
+  .wrap{max-width:1150px;margin:auto;padding:0 16px 60px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 18px}
+  .chip{padding:7px 14px;border-radius:20px;border:1px solid #d1d5db;background:#fff;cursor:pointer;font-size:13px}
+  .chip.on{background:var(--p);color:#fff;border-color:var(--p)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+  .card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 1px 5px rgba(0,0,0,.07);cursor:pointer;transition:.15s;position:relative}
+  .card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.12)}
+  .img{height:150px;display:grid;place-items:center;font-size:70px;background:#eef2ff}
+  .info{padding:12px}
+  .info h3{font-size:15px;margin-bottom:4px}
+  .cat{font-size:12px;color:var(--mut)}
+  .price{font-weight:800;margin:6px 0;color:var(--p)}
+  .price s{color:var(--mut);font-weight:400;font-size:12px;margin-left:6px}
+  .heart{position:absolute;top:8px;right:8px;background:#fff;border:0;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:16px;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+  .empty{padding:40px;text-align:center;color:var(--mut)}
+  /* overlay / modal / drawer */
+  .ov{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;display:none;align-items:center;justify-content:center;padding:14px}
+  .ov.show{display:flex}
+  .modal{background:#fff;border-radius:14px;max-width:560px;width:100%;max-height:92vh;overflow:auto;padding:22px;position:relative}
+  .x{position:absolute;top:10px;right:14px;border:0;background:none;font-size:26px;cursor:pointer}
+  .pbig{height:200px;display:grid;place-items:center;font-size:110px;background:#eef2ff;border-radius:10px;margin-bottom:14px}
+  .drawer{position:fixed;top:0;right:-420px;width:400px;max-width:100%;height:100%;background:#fff;z-index:110;transition:.25s;display:flex;flex-direction:column;box-shadow:-6px 0 24px rgba(0,0,0,.2)}
+  .drawer.show{right:0}
+  .dh{padding:16px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center;font-weight:700}
+  .db{flex:1;overflow:auto;padding:12px 16px}
+  .df{padding:16px;border-top:1px solid #eee}
+  .ci{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid #f1f1f1}
+  .ci .em{font-size:34px}
+  .ci .t{flex:1;font-size:14px}
+  .qty button{width:26px;height:26px;border:1px solid #d1d5db;background:#fff;border-radius:6px;cursor:pointer}
+  .row{display:flex;justify-content:space-between;margin:6px 0;font-size:14px}
+  .row.tot{font-weight:800;font-size:17px}
+  .coupon{display:flex;gap:6px;margin:10px 0}
+  .coupon input{flex:1;padding:9px;border:1px solid #d1d5db;border-radius:8px}
+  label{display:block;font-size:13px;margin:10px 0 4px;font-weight:600}
+  input[type=text],input[type=tel],input[type=email],textarea,select{width:100%;padding:10px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;font-family:inherit}
+  .pay{display:flex;gap:10px;margin:8px 0}
+  .pay label{flex:1;border:1px solid #d1d5db;border-radius:8px;padding:12px;font-weight:500;cursor:pointer;margin:0}
+  .steps{display:flex;gap:6px;margin-bottom:12px;font-size:12px;color:var(--mut)}
+  .steps span{flex:1;text-align:center;padding:6px;border-bottom:3px solid #e5e7eb}
+  .steps span.on{border-color:var(--p);color:var(--p);font-weight:700}
+  .err{color:var(--red);font-size:12px;margin-top:3px;display:none}
+  .ty{text-align:center;padding:20px}
+  .ty .big{font-size:64px}
+  .toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:10px 18px;border-radius:30px;z-index:200;font-size:14px;display:none}
+  footer{background:#111827;color:#9ca3af;text-align:center;padding:30px 14px;font-size:13px;margin-top:40px}
+  footer a{color:#a5b4fc}
+</style>
+</head>
+<body>
+
+<div class="topstrip">Free delivery on orders above Rs. 5,000 | Coupon: <b>SAVE10</b> &nbsp;|&nbsp; Helpline: <a href="tel:+923001234567" style="color:#fff;font-weight:700">0300-1234567</a></div>
+
+<header>
+  <div class="bar">
+    <div class="logo">TrendMart</div>
+    <form class="search" id="searchForm">
+      <input id="searchInput" type="text" placeholder="Search products...">
+      <button>Search</button>
+    </form>
+    <a class="cartbtn" href="https://wa.me/923001234567" target="_blank" style="text-decoration:none;color:inherit">WhatsApp</a>
+    <button class="cartbtn" id="openCart">Cart <b id="cartCount">0</b></button>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>Mega Winter Sale - Up to 40% OFF</h1>
+  <p>Best gadgets, fashion aur home products. Tracking test karne ke liye har button try karen.</p>
+  <button class="btn" id="hero-shop-btn" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Shop Now</button>
+</div>
+
+<div class="wrap" id="products">
+  <div class="chips" id="chips"></div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<footer>
+  <p>TrendMart - Demo store for tracking practice</p>
+  <p style="margin-top:8px"><a href="mailto:support@trendmart.test">support@trendmart.test</a> | <a href="tel:+923001234567">Call us</a> | <a href="https://www.google.com" target="_blank">Outbound link test</a></p>
+</footer>
+
+<!-- Product modal -->
+<div class="ov" id="pov"><div class="modal">
+  <button class="x" onclick="closeOv('pov')">&times;</button>
+  <div id="pbody"></div>
+</div></div>
+
+<!-- Cart drawer -->
+<div class="ov" id="cov" onclick="if(event.target===this)closeCart()"></div>
+<div class="drawer" id="drawer">
+  <div class="dh"><span>Your Cart</span><button class="x" style="position:static" onclick="closeCart()">&times;</button></div>
+  <div class="db" id="cartBody"></div>
+  <div class="df" id="cartFoot"></div>
+</div>
+
+<!-- Checkout modal -->
+<div class="ov" id="chov"><div class="modal">
+  <button class="x" onclick="closeOv('chov')">&times;</button>
+  <div id="chbody"></div>
+</div></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================= DATA ================= */
+var CURRENCY = 'PKR';
+var PRODUCTS = [
+  {id:'P1001',name:'Wireless Earbuds Pro',cat:'Electronics',price:4500,old:6500,em:'🎧'},
+  {id:'P1002',name:'Smart Watch Series 5',cat:'Electronics',price:7999,old:10999,em:'⌚'},
+  {id:'P1003',name:'Bluetooth Speaker',cat:'Electronics',price:3200,old:4200,em:'🔊'},
+  {id:'P1004',name:'Running Sneakers',cat:'Fashion',price:5400,old:7200,em:'👟'},
+  {id:'P1005',name:'Leather Backpack',cat:'Fashion',price:3800,old:5000,em:'🎒'},
+  {id:'P1006',name:'Sunglasses UV400',cat:'Fashion',price:1500,old:2400,em:'🕶️'},
+  {id:'P1007',name:'Air Fryer 4L',cat:'Home',price:12500,old:16000,em:'🍟'},
+  {id:'P1008',name:'Table Lamp LED',cat:'Home',price:1800,old:2500,em:'💡'},
+  {id:'P1009',name:'Coffee Maker',cat:'Home',price:6900,old:8900,em:'☕'},
+  {id:'P1010',name:'Yoga Mat Premium',cat:'Fitness',price:2200,old:3000,em:'🧘'},
+  {id:'P1011',name:'Dumbbell Set 10kg',cat:'Fitness',price:4800,old:6000,em:'🏋️'},
+  {id:'P1012',name:'Skincare Gift Box',cat:'Beauty',price:3500,old:4800,em:'🧴'}
+];
+var cart = JSON.parse(localStorage.getItem('tm_cart') || '[]');
+var wish = JSON.parse(localStorage.getItem('tm_wish') || '[]');
+var activeCat = 'All', searchTerm = '', coupon = null;
+
+function fmt(n){return 'Rs. ' + n.toLocaleString('en-PK');}
+function item(p, qty){return {item_id:p.id,item_name:p.name,item_category:p.cat,price:p.price,quantity:qty||1,currency:CURRENCY};}
+function byId(id){return PRODUCTS.find(function(p){return p.id===id;});}
+function save(){localStorage.setItem('tm_cart',JSON.stringify(cart));localStorage.setItem('tm_wish',JSON.stringify(wish));}
+function toast(m){var t=document.getElementById('toast');t.textContent=m;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none';},1800);}
+function openOv(id){document.getElementById(id).classList.add('show');}
+function closeOv(id){document.getElementById(id).classList.remove('show');}
+
+/* ================= LISTING ================= */
+function renderChips(){
+  var cats=['All'].concat(PRODUCTS.map(function(p){return p.cat;}).filter(function(v,i,a){return a.indexOf(v)===i;}));
+  document.getElementById('chips').innerHTML=cats.map(function(c){
+    return '<button class="chip '+(c===activeCat?'on':'')+'" onclick="setCat(\''+c+'\')">'+c+'</button>';}).join('');
+}
+function setCat(c){activeCat=c;renderChips();renderGrid(true);}
+function renderGrid(fireList){
+  var list=PRODUCTS.filter(function(p){
+    return (activeCat==='All'||p.cat===activeCat)&&(!searchTerm||p.name.toLowerCase().indexOf(searchTerm.toLowerCase())>-1);});
+  var g=document.getElementById('grid');
+  if(!list.length){g.innerHTML='<div class="empty">Koi product nahi mila</div>';return;}
+  g.innerHTML=list.map(function(p){
+    var off=Math.round((1-p.price/p.old)*100);
+    return '<div class="card" onclick="openProduct(\''+p.id+'\',true)">'+
+      '<button class="heart" onclick="event.stopPropagation();toggleWish(\''+p.id+'\')">'+(wish.indexOf(p.id)>-1?'❤️':'🤍')+'</button>'+
+      '<div class="img">'+p.em+'</div><div class="info"><div class="cat">'+p.cat+'</div><h3>'+p.name+'</h3>'+
+      '<div class="price">'+fmt(p.price)+'<s>'+fmt(p.old)+'</s> <small style="color:var(--ok)">-'+off+'%</small></div>'+
+      '<button class="btn pri full add-to-cart-btn" style="margin-top:4px" onclick="event.stopPropagation();addToCart(\''+p.id+'\',1,\'listing\')">Add to Cart</button></div></div>';}).join('');
+  
+}
+
+/* ================= PRODUCT ================= */
+function openProduct(id,fromList){
+  var p=byId(id);
+  
+  document.getElementById('pbody').innerHTML=
+    '<div class="pbig">'+p.em+'</div><div class="cat">'+p.cat+' | SKU '+p.id+'</div><h2 style="margin:4px 0">'+p.name+'</h2>'+
+    '<div class="price" style="font-size:22px">'+fmt(p.price)+' <s>'+fmt(p.old)+'</s></div>'+
+    '<p style="color:var(--mut);font-size:14px;margin:8px 0">Premium quality, 1 year warranty, 7 din easy return aur Cash on Delivery available.</p>'+
+    '<label>Quantity</label><select id="pq">'+[1,2,3,4,5].map(function(n){return '<option>'+n+'</option>';}).join('')+'</select>'+
+    '<button id="pdp-add-to-cart" class="btn pri full add-to-cart-btn" onclick="addToCart(\''+p.id+'\',+document.getElementById(\'pq\').value,\'product_page\');closeOv(\'pov\')">Add to Cart</button>'+
+    '<button id="buy-now-btn" class="btn full" style="background:#111;color:#fff" onclick="buyNow(\''+p.id+'\')">Buy Now</button>'+
+    '<button class="btn full" style="background:#fff;border:1px solid #d1d5db;color:#333" onclick="toggleWish(\''+p.id+'\')">Add to Wishlist</button>';
+  openOv('pov');
+  
+}
+function toggleWish(id){
+  var i=wish.indexOf(id);
+  if(i>-1){wish.splice(i,1);toast('Wishlist se hata diya');}
+  else{wish.push(id);var p=byId(id);toast('Wishlist me add ho gaya');}
+  save();renderGrid(false);
+}
+
+/* ================= CART ================= */
+function addToCart(id,qty,source){
+  var p=byId(id),ex=cart.find(function(c){return c.id===id;});
+  if(ex)ex.qty+=qty;else cart.push({id:id,qty:qty});
+  save();updateCart();toast(p.name+' cart me add hua');
+  var it=item(p,qty);
+  
+}
+function buyNow(id){addToCart(id,1,'buy_now');closeOv('pov');startCheckout();}
+function changeQty(id,d){
+  var c=cart.find(function(x){return x.id===id;});if(!c)return;
+  if(d<0&&c.qty===1){return removeItem(id);}
+  c.qty+=d;save();updateCart();renderCart();
+}
+function removeItem(id){
+  var c=cart.find(function(x){return x.id===id;}),p=byId(id);
+  cart=cart.filter(function(x){return x.id!==id;});save();updateCart();renderCart();
+  
+}
+function totals(){
+  var sub=cart.reduce(function(a,c){return a+byId(c.id).price*c.qty;},0);
+  var disc=coupon?Math.round(sub*0.10):0;
+  var ship=(sub-disc)>=5000||sub===0?0:250;
+  return {sub:sub,disc:disc,ship:ship,total:sub-disc+ship};
+}
+function cartItems(){return cart.map(function(c){return item(byId(c.id),c.qty);});}
+function updateCart(){document.getElementById('cartCount').textContent=cart.reduce(function(a,c){return a+c.qty;},0);}
+function renderCart(){
+  var b=document.getElementById('cartBody'),f=document.getElementById('cartFoot');
+  if(!cart.length){b.innerHTML='<div class="empty">Cart khali hai 🛒</div>';f.innerHTML='';return;}
+  b.innerHTML=cart.map(function(c){var p=byId(c.id);
+    return '<div class="ci"><div class="em">'+p.em+'</div><div class="t"><b>'+p.name+'</b><br>'+fmt(p.price)+'</div>'+
+    '<div class="qty"><button onclick="changeQty(\''+p.id+'\',-1)">-</button> '+c.qty+' <button onclick="changeQty(\''+p.id+'\',1)">+</button></div>'+
+    '<button class="x" style="position:static;font-size:20px" onclick="removeItem(\''+p.id+'\')">&times;</button></div>';}).join('');
+  var t=totals();
+  f.innerHTML='<div class="coupon"><input id="cpn" type="text" placeholder="Coupon code (SAVE10)" value="'+(coupon||'')+'"><button class="btn pri" onclick="applyCoupon()">Apply</button></div>'+
+    '<div class="row"><span>Subtotal</span><span>'+fmt(t.sub)+'</span></div>'+
+    (t.disc?'<div class="row" style="color:var(--ok)"><span>Discount</span><span>- '+fmt(t.disc)+'</span></div>':'')+
+    '<div class="row"><span>Delivery</span><span>'+(t.ship?fmt(t.ship):'FREE')+'</span></div>'+
+    '<div class="row tot"><span>Total</span><span>'+fmt(t.total)+'</span></div>'+
+    '<button id="checkout-btn" class="btn pri full" onclick="startCheckout()">Proceed to Checkout</button>';
+}
+function applyCoupon(){
+  var v=document.getElementById('cpn').value.trim().toUpperCase();
+  if(v==='SAVE10'){coupon=v;toast('Coupon lag gaya');}
+  else{coupon=null;toast('Invalid coupon');}
+  renderCart();
+}
+function openCart(){
+  renderCart();document.getElementById('drawer').classList.add('show');openOv('cov');
+  var t=totals();
+}
+function closeCart(){document.getElementById('drawer').classList.remove('show');closeOv('cov');}
+document.getElementById('openCart').onclick=openCart;
+
+/* ================= CHECKOUT ================= */
+var co={step:1,data:{}};
+function startCheckout(){
+  if(!cart.length){toast('Cart khali hai');return;}
+  closeCart();co={step:1,data:{}};renderCheckout();openOv('chov');
+  var t=totals();
+  
+}
+function renderCheckout(){
+  var b=document.getElementById('chbody'),t=totals();
+  var steps='<div class="steps"><span class="'+(co.step===1?'on':'')+'">1. Shipping</span><span class="'+(co.step===2?'on':'')+'">2. Payment</span></div>';
+  if(co.step===1){
+    b.innerHTML='<h2>Checkout</h2>'+steps+
+      '<label>Full Name</label><input type="text" id="cn"><div class="err" id="e1">Naam likhen</div>'+
+      '<label>Phone</label><input type="tel" id="cp" placeholder="03xx-xxxxxxx"><div class="err" id="e2">Sahi phone number likhen</div>'+
+      '<label>Email (optional)</label><input type="email" id="ce">'+
+      '<label>City</label><select id="cc"><option>Karachi</option><option>Lahore</option><option>Islamabad</option><option>Faisalabad</option><option>Other</option></select>'+
+      '<label>Address</label><textarea id="ca" rows="2"></textarea><div class="err" id="e3">Address likhen</div>'+
+      '<button id="continue-payment-btn" class="btn pri full" onclick="toStep2()">Continue to Payment</button>';
+  }else{
+    b.innerHTML='<h2>Payment</h2>'+steps+
+      '<div class="pay"><label><input type="radio" name="pm" value="COD" checked> Cash on Delivery</label><label><input type="radio" name="pm" value="Card"> Debit/Credit Card</label></div>'+
+      '<div class="row"><span>Items</span><span>'+cart.reduce(function(a,c){return a+c.qty;},0)+'</span></div>'+
+      '<div class="row tot"><span>Total</span><span>'+fmt(t.total)+'</span></div>'+
+      '<button id="place-order-btn" class="btn pri full" onclick="placeOrder()">Place Order</button>'+
+      '<button class="btn full" style="background:#fff;border:1px solid #d1d5db;color:#333" onclick="co.step=1;renderCheckout()">Back</button>';
+  }
+}
+function toStep2(){
+  var n=cn.value.trim(),p=cp.value.trim(),a=ca.value.trim(),ok=true;
+  e1.style.display=n?'none':'block';e2.style.display=/^[0-9+\-\s]{10,}$/.test(p)?'none':'block';e3.style.display=a?'none':'block';
+  if(!n||!/^[0-9+\-\s]{10,}$/.test(p)||!a)return;
+  co.data={name:n,phone:p,email:ce.value,city:cc.value,address:a};
+  var t=totals();
+  
+  co.step=2;renderCheckout();
+}
+function placeOrder(){
+  var pm=document.querySelector('input[name=pm]:checked').value,t=totals();
+  var oid='TM'+Date.now().toString().slice(-8);
+  var order={order_id:oid,total:t.total,shipping:t.ship,coupon:coupon||'',payment:pm,currency:CURRENCY,name:co.data.name,
+    items:cartItems()};
+  sessionStorage.setItem('tm_last_order',JSON.stringify(order));
+  cart=[];coupon=null;save();updateCart();
+  location.href='order-success.html?order_id='+oid+'&value='+t.total;
+}
+
+/* ================= SEARCH + INIT ================= */
+document.getElementById('searchForm').addEventListener('submit',function(e){
+  e.preventDefault();searchTerm=document.getElementById('searchInput').value.trim();
+  renderGrid(false);
+});
+renderChips();renderGrid(true);updateCart();
+</script>
+</body>
+</html>

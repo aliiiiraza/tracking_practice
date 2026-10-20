@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CoolAir AC Services - Free Quote (Lead Tracking Practice)</title>
+<style>
+  :root{--p:#0ea5e9;--p2:#0284c7;--d:#0f172a;--bg:#f8fafc;--mut:#64748b;--ok:#16a34a}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:system-ui,Segoe UI,Roboto,sans-serif;color:var(--d);background:#fff;line-height:1.55}
+  .c{max-width:1050px;margin:auto;padding:0 18px}
+  nav{position:sticky;top:0;background:#fff;z-index:50;box-shadow:0 1px 6px rgba(0,0,0,.08)}
+  nav .c{display:flex;justify-content:space-between;align-items:center;padding:12px 18px}
+  .logo{font-weight:800;font-size:21px;color:var(--p2)}
+  .call{background:var(--ok);color:#fff;text-decoration:none;padding:9px 16px;border-radius:8px;font-weight:700;font-size:14px}
+  .hero{background:linear-gradient(135deg,#0c4a6e,#0ea5e9);color:#fff;padding:50px 0}
+  .hero .c{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center}
+  .hero h1{font-size:38px;line-height:1.15;margin-bottom:12px}
+  .hero p{opacity:.92;margin-bottom:18px}
+  .badges{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;margin-top:14px}
+  .badges span{background:rgba(255,255,255,.15);padding:6px 12px;border-radius:20px}
+  .btn{display:inline-block;border:0;cursor:pointer;text-decoration:none;font-weight:700;border-radius:10px;padding:13px 22px;font-size:15px}
+  .btn.w{background:#fff;color:var(--p2)}
+  .btn.g{background:var(--ok);color:#fff}
+  .btn.p{background:var(--p);color:#fff;width:100%}.btn.p:hover{background:var(--p2)}
+  .form{background:#fff;color:var(--d);border-radius:14px;padding:22px;box-shadow:0 12px 40px rgba(0,0,0,.25)}
+  .form h3{margin-bottom:4px}
+  .form small{color:var(--mut)}
+  label{display:block;font-size:13px;font-weight:600;margin:11px 0 4px}
+  input,select,textarea{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:8px;font-size:14px;font-family:inherit}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--p);border-color:var(--p)}
+  .err{color:#dc2626;font-size:12px;margin-top:3px;display:none}
+  section{padding:56px 0}
+  section.alt{background:var(--bg)}
+  h2{font-size:28px;text-align:center;margin-bottom:8px}
+  .sub{text-align:center;color:var(--mut);margin-bottom:28px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+  .card{background:#fff;border-radius:12px;padding:22px;box-shadow:0 1px 6px rgba(0,0,0,.08);text-align:center}
+  .card .i{font-size:40px}
+  .card h3{margin:8px 0 4px}
+  .price{font-size:26px;font-weight:800;color:var(--p2);margin:8px 0}
+  .card .btn{margin-top:10px;width:100%;background:var(--p);color:#fff}
+  .rev{font-size:14px;color:#334155}
+  .faq{max-width:760px;margin:auto}
+  .q{background:#fff;border:1px solid #e2e8f0;border-radius:10px;margin-bottom:10px}
+  .q button{width:100%;text-align:left;background:none;border:0;padding:15px;font-weight:700;font-size:15px;cursor:pointer;display:flex;justify-content:space-between}
+  .q div{display:none;padding:0 15px 15px;color:#475569;font-size:14px}
+  .q.open div{display:block}
+  .cta{background:var(--d);color:#fff;text-align:center;padding:50px 18px}
+  .cta h2{color:#fff}
+  .ty{text-align:center;padding:30px 10px}
+  .ty .big{font-size:60px}
+  footer{background:#020617;color:#94a3b8;text-align:center;padding:24px;font-size:13px}
+  .stick{display:none;position:fixed;bottom:0;left:0;right:0;z-index:60;background:#fff;box-shadow:0 -3px 12px rgba(0,0,0,.2);padding:8px;gap:8px}
+  .stick a{flex:1;text-align:center;padding:12px;border-radius:8px;color:#fff;text-decoration:none;font-weight:700}
+  .wa{position:fixed;right:16px;bottom:78px;z-index:60;background:#25d366;color:#fff;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-size:28px;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,.3)}
+  @media(max-width:800px){.hero .c{grid-template-columns:1fr}.hero h1{font-size:29px}.stick{display:flex}.wa{bottom:80px}}
+</style>
+</head>
+<body>
+
+<nav><div class="c">
+  <div class="logo">❄️ CoolAir Services</div>
+  <a class="call" id="nav-call-btn" href="tel:+923001234567">📞 Call Now</a>
+</div></nav>
+
+<div class="hero"><div class="c">
+  <div>
+    <h1>AC Repair, Service &amp; Installation - Same Day Visit</h1>
+    <p>Karachi me expert technicians, 30 din warranty aur transparent pricing. Abhi free quote lein.</p>
+    <a class="btn w" href="#quote" id="hero-quote-btn">Get Free Quote</a>
+    <a class="btn g" id="hero-call-btn" href="tel:+923001234567" style="margin-left:8px">Call Now</a>
+    <div class="badges"><span>⭐ 4.8 Rating</span><span>🛠️ 5,000+ Jobs</span><span>⏱️ 60 min response</span></div>
+  </div>
+
+  <div class="form" id="quote">
+    <div id="formWrap">
+      <h3>Free Quote Request</h3>
+      <small>Form bharen, hum 15 minute me call karenge</small>
+      <form id="leadForm" novalidate>
+        <label>Full Name</label>
+        <input type="text" id="fn" name="name" placeholder="Aap ka naam">
+        <div class="err" id="e1">Naam likhen</div>
+        <label>Phone Number</label>
+        <input type="tel" id="fp" name="phone" placeholder="03xx-xxxxxxx">
+        <div class="err" id="e2">Sahi phone number likhen (kam az kam 10 digits)</div>
+        <label>Service</label>
+        <select id="fs" name="service">
+          <option value="">Select service</option>
+          <option>AC Service</option><option>AC Repair</option><option>AC Installation</option><option>Gas Refill</option>
+        </select>
+        <div class="err" id="e3">Service select karen</div>
+        <label>Area</label>
+        <input type="text" id="fa" name="area" placeholder="e.g. Gulshan, DHA">
+        <label>Message (optional)</label>
+        <textarea id="fm" rows="2"></textarea>
+        <button id="form-submit-btn" class="btn p" style="margin-top:14px" type="submit">Get My Free Quote</button>
+      </form>
+    </div>
+  </div>
+</div></div>
+
+<section><div class="c">
+  <h2>Hamari Services</h2><p class="sub">Har brand ki AC ke liye</p>
+  <div class="cards">
+    <div class="card"><div class="i">🧼</div><h3>AC Service</h3><div class="price">Rs. 1,500</div><p>Deep cleaning &amp; checkup</p><button onclick="pick('AC Service')" class="btn service-book-btn">Book This</button></div>
+    <div class="card"><div class="i">🔧</div><h3>AC Repair</h3><div class="price">Rs. 2,500</div><p>Kisi bhi fault ki repair</p><button onclick="pick('AC Repair')" class="btn service-book-btn">Book This</button></div>
+    <div class="card"><div class="i">🏠</div><h3>Installation</h3><div class="price">Rs. 3,500</div><p>Split &amp; window AC</p><button onclick="pick('AC Installation')" class="btn service-book-btn">Book This</button></div>
+    <div class="card"><div class="i">⛽</div><h3>Gas Refill</h3><div class="price">Rs. 4,000</div><p>R410 / R22 gas</p><button onclick="pick('Gas Refill')" class="btn service-book-btn">Book This</button></div>
+  </div>
+</div></section>
+
+<section class="alt"><div class="c">
+  <h2>Customers Kya Kehte Hain</h2><p class="sub">Verified reviews</p>
+  <div class="cards">
+    <div class="card rev">⭐⭐⭐⭐⭐<p>"Technician time par aya aur kaam acha kiya."</p><b>- Ahmed, Gulshan</b></div>
+    <div class="card rev">⭐⭐⭐⭐⭐<p>"Price bilkul wohi jo bataya tha."</p><b>- Sara, DHA</b></div>
+    <div class="card rev">⭐⭐⭐⭐⭐<p>"Same day service mil gayi, highly recommend."</p><b>- Bilal, North Nazimabad</b></div>
+  </div>
+</div></section>
+
+<section><div class="c">
+  <h2>FAQs</h2><p class="sub">Aam sawalat</p>
+  <div class="faq" id="faq">
+    <div class="q"><button>Visit charges kitne hain?<span>+</span></button><div>Inspection visit free hai agar aap kaam karwate hain.</div></div>
+    <div class="q"><button>Warranty milti hai?<span>+</span></button><div>Haan, har service par 30 din ki warranty hai.</div></div>
+    <div class="q"><button>Kitni jaldi technician ata hai?<span>+</span></button><div>Zyada tar areas me 60 minute ke andar.</div></div>
+    <div class="q"><button>Payment kaise karni hai?<span>+</span></button><div>Kaam ke baad cash ya online transfer.</div></div>
+  </div>
+</div></section>
+
+<div class="cta">
+  <h2>Garmi se pehle apni AC theek karwayen</h2>
+  <p style="margin:8px 0 18px;opacity:.85">Aaj hi book karen, kal visit.</p>
+  <a class="btn g" href="tel:+923001234567">📞 0300-1234567</a>
+  <a class="btn w" href="#quote" style="margin-left:8px" id="bottom-quote-btn">Free Quote</a>
+</div>
+
+<footer>
+  <p>© CoolAir Services - Demo website for tracking practice</p>
+  <p style="margin-top:6px"><a href="mailto:info@coolair.test" style="color:#7dd3fc">info@coolair.test</a> | <a href="https://www.google.com" target="_blank" style="color:#7dd3fc">Outbound link test</a></p>
+</footer>
+
+<a class="wa" id="whatsapp-btn" href="https://wa.me/923001234567?text=Hi%20I%20need%20AC%20service" target="_blank">💬</a>
+<div class="stick">
+  <a href="tel:+923001234567" style="background:#16a34a">📞 Call</a>
+  <a href="#quote" style="background:#0ea5e9" id="sticky-quote-btn">Free Quote</a>
+</div>
+
+<script>
+/* ---------- Service card -> form select ---------- */
+function pick(s){
+  document.getElementById('fs').value=s;
+  document.getElementById('quote').scrollIntoView({behavior:'smooth'});
+  
+}
+
+/* ---------- FAQ accordion ---------- */
+document.querySelectorAll('#faq .q button').forEach(function(b){
+  b.addEventListener('click',function(){
+    var q=b.parentElement,open=q.classList.toggle('open');
+    b.querySelector('span').textContent=open?'-':'+';
+    
+  });
+});
+
+/* ---------- Form submit ---------- */
+document.getElementById('leadForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var n=fn.value.trim(),p=fp.value.trim(),s=fs.value;
+  var okN=!!n,okP=/^[0-9+\-\s]{10,}$/.test(p),okS=!!s;
+  e1.style.display=okN?'none':'block';
+  e2.style.display=okP?'none':'block';
+  e3.style.display=okS?'none':'block';
+  if(!(okN&&okP&&okS))return;
+  sessionStorage.setItem('lead_info',JSON.stringify({name:n,service:s}));
+  location.href='thank-you.html';
+});
+</script>
+</body>
+</html>

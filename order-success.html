@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Order Success - TrendMart</title>
+<style>body{font-family:system-ui,sans-serif;background:#f6f7fb;margin:0;display:grid;place-items:center;min-height:100vh;color:#1f2937}
+.b{background:#fff;max-width:480px;width:92%;padding:30px;border-radius:14px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.big{font-size:64px}a{display:inline-block;margin-top:18px;padding:12px 22px;background:#4f46e5;color:#fff;border-radius:8px;text-decoration:none;font-weight:700}
+.row{display:flex;justify-content:space-between;font-size:14px;padding:6px 0;border-bottom:1px solid #f1f1f1;text-align:left}</style></head>
+<body><div class="b"><div class="big">✅</div><h1>Order Placed!</h1>
+<p>Order ID: <b id="oid">-</b></p><div id="items" style="margin:14px 0"></div>
+<p>Total: <b id="total">-</b></p><p style="color:#6b7280;font-size:14px">Hamari team jald call karegi.</p>
+<a href="shop.html">Continue Shopping</a></div>
+<script>
+var q=new URLSearchParams(location.search),o=null;
+try{o=JSON.parse(sessionStorage.getItem('tm_last_order'));}catch(e){}
+document.getElementById('oid').textContent=q.get('order_id')||(o&&o.order_id)||'-';
+document.getElementById('total').textContent='Rs. '+Number(q.get('value')||(o&&o.total)||0).toLocaleString('en-PK');
+if(o&&o.items)document.getElementById('items').innerHTML=o.items.map(function(i){return '<div class="row"><span>'+i.item_name+' x '+i.quantity+'</span><span>Rs. '+(i.price*i.quantity).toLocaleString('en-PK')+'</span></div>';}).join('');
+</script></body></html>
